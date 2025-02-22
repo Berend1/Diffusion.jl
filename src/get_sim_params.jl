@@ -1,8 +1,8 @@
 import YAML
 
 function get_sim_params(ARGS)
-
     path = ARGS[1]
+    println("Path :", path)
     data = YAML.load(open(path))
 
     key = "grid"

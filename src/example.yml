@@ -1,13 +1,13 @@
 grid:
-  nx: 256
-  ny: 256
+  nx: 2048
+  ny: 2048
 
 numerics:
-  nprocx: 2
-  nprocy: 1
+  nprocx: 4
+  nprocy: 2
   max_steps: 100000000
   dt: 0.1
   tol: 0.1
 
 output:
-  filename: "output.dat"
+  filename: "output2048.dat"

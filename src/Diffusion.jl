@@ -1,6 +1,4 @@
-module Diffusion
-
-import MPI
+using MPI
 
 include("types.jl")
 include("init.jl")
@@ -8,7 +6,7 @@ include("get_sim_params.jl")
 include("update.jl")
 include("io.jl")
 
-function main()
+function MainLoop()
 
 #temp1_init: temperature init on borders
 temp1_init = 10.0
@@ -161,10 +159,8 @@ if (my_id == 0)
 end
 
 MPI.Finalize()
-
 end
 
+MainLoop()
 
-#main()
 
-end

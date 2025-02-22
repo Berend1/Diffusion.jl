@@ -80,15 +80,25 @@ function computeNext!(u0::Array{Float64,2}, u::Array{Float64,2},
 
     #Perform an explicit update on the points within the domain.
     #Optimization : inner loop on column index (second index) since
-    #Julia is row major
+    #Julia is row major  -- WRONG Julia is column major, so therefore i and j have been swapped below:
+    
     diff = 0.0
-    for i = xs[mep1]:xe[mep1]
-        for j = ys[mep1]:ye[mep1]
-            u[i,j] = weightx * (u0[i-1,j] + u0[i+1,j] + u0[i,j]*diagx) +
-                weighty * (u0[i,j-1] + u0[i,j+1] + u0[i,j]*diagy)
-        end
-    end
+    #for i = xs[mep1]:xe[mep1]
+    #   for j = ys[mep1]:ye[mep1]
+    #      u[i,j] = weightx * (u0[i-1,j] + u0[i+1,j] + u0[i,j]*diagx) +
+    #            weighty * (u0[i,j-1] + u0[i,j+1] + u0[i,j]*diagy)
+    #    end
+    #end
 
+    # test with loop swapped i,j j,i  and we find this speed things up by at least 20% for nx, ny = 2048
+    #554 seconds versus 439 seconds
+    
+   for j = ys[mep1]:ye[mep1]
+       for i = xs[mep1]:xe[mep1]
+           u[i,j] = weightx * (u0[i-1,j] + u0[i+1,j] + u0[i,j]*diagx) +
+               weighty * (u0[i,j-1] + u0[i,j+1] + u0[i,j]*diagy)
+       end
+   end
    #Compute the difference into domain for convergence.
    #Update the value u0(i,j).
    #Optimization : inner loop on column index (second index) since
